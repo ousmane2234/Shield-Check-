@@ -58,8 +58,8 @@ class DeviceMonitorService : LifecycleService() {
 
     private fun initSupabase() {
         try {
-            val supabaseUrl = "YOUR_SUPABASE_URL"
-            val supabaseKey = "YOUR_SUPABASE_ANON_KEY"
+            val supabaseUrl = "https://frsvuwpidxsxuczgwmfh.supabase.co"
+            val supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZyc3Z1d3BpZHhzeHVjemd3bWZoIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMyODM0MzAsImV4cCI6MjA4ODg1OTQzMH0.ZHSIrJ5zysauA3bcMQKEJt_rKMWic8VM54HXsB7tW_I"
             
             supabaseClient = createSupabaseClient(
                 supabaseUrl = supabaseUrl,
