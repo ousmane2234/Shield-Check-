@@ -12,8 +12,6 @@
 
     <application
         android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -32,7 +30,7 @@
 
         <!-- Service de surveillance au premier plan -->
         <service
-            android:name=".service.DeviceMonitorService"
+            android:name=".service.RealtimeService"
             android:enabled="true"
             android:exported="false"
             android:foregroundServiceType="dataSync" />
