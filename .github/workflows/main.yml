@@ -10,40 +10,62 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+
     steps:
+    # ========================
+    # 1. Checkout code
+    # ========================
     - name: Checkout repository
       uses: actions/checkout@v4
-      
-    - name: Setup JDK 21
+
+    # ========================
+    # 2. Setup Java (Android stable)
+    # ========================
+    - name: Setup JDK 17
       uses: actions/setup-java@v4
       with:
-        java-version: '21'
+        java-version: '17'
         distribution: 'temurin'
         cache: gradle
-        
-    - name: Make Gradle wrapper executable
-      run: chmod +x ./gradlew
-      
-    - name: Clean build
+
+    # ========================
+    # 3. Permissions Gradle
+    # ========================
+    - name: Make Gradle executable
+      run: chmod +x gradlew
+
+    # ========================
+    # 4. Clean project
+    # ========================
+    - name: Clean project
       run: ./gradlew clean
-      
+
+    # ========================
+    # 5. Build APK (DEBUG)
+    # ========================
     - name: Build Debug APK
-      run: ./gradlew assembleDebug -v --stacktrace 2>&1 || true
-      
-    - name: Check build outputs
-      run: find app/build -name "*.apk" -type f 2>/dev/null || echo "No APK found"
-      
-    - name: Upload Debug APK if exists
+      run: ./gradlew assembleDebug --stacktrace --info
+
+    # ========================
+    # 6. Debug output (IMPORTANT)
+    # ========================
+    - name: List build outputs
+      run: find . -type f -name "*.apk"
+
+    # ========================
+    # 7. Upload APK artifact
+    # ========================
+    - name: Upload APK
       uses: actions/upload-artifact@v4
-      if: always()
+      if: success()
       with:
         name: app-debug
-        path: app/build/outputs/apk/debug/app-debug.apk
+        path: "**/*.apk"
         retention-days: 30
-        
+
+    # ========================
+    # 8. Status final
+    # ========================
     - name: Build Status
       if: always()
-      run: |
-        echo "Build process completed"
-        echo "Check artifacts for APK file"
+      run: echo "Build terminé avec succès"
